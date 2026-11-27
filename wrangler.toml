@@ -1,9 +1,9 @@
-# النشر اليدوي (اختياري): node tools/build-worker.mjs && npx wrangler deploy
+# إعدادات Cloudflare Workers
+# Cloudflare يبني وينشر تلقائياً عند كل رفع إلى GitHub (Workers Builds):
+#   Build command:  node tools/build-worker.mjs
+#   Deploy command: npx wrangler deploy
+# النطاق zeenpumps.com مربوط من لوحة Cloudflare (Settings → Domains & Routes)
 name = "pump-zeen"
 main = "deploy/worker.js"
 compatibility_date = "2026-11-01"
-workers_dev = false
-routes = [
-  { pattern = "zeenpumps.com", custom_domain = true },
-  { pattern = "www.zeenpumps.com", custom_domain = true },
-]
+workers_dev = true

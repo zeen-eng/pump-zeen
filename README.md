@@ -5,7 +5,7 @@
 
 - موقع ثابت (HTML + CSS + JavaScript) بدون مكتبات خارجية وبدون خطوة بناء.
 - الدخول وحفظ التصاميم ولوحة الإدارة عبر **Supabase**، والحماية مفروضة في قاعدة البيانات.
-- الاستضافة على **Cloudflare Pages** مع نطاقك الخاص. الخطوات في [`docs/DEPLOY.md`](docs/DEPLOY.md).
+- الاستضافة على **Cloudflare Workers** على zeenpumps.com، وكل `git push` يُنشر تلقائياً. الخطوات في [`docs/DEPLOY.md`](docs/DEPLOY.md).
 
 ## أين أعدّل؟
 
