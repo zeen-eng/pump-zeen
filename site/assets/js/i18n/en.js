@@ -416,7 +416,7 @@ export const EN = {
   "إنشاء الحساب وإرسال رسالة التفعيل": "Create account and send activation email",
   "تحقق من بريدك": "Check your email",
   "أرسلنا رابط التفعيل إلى": "We sent an activation link to",
-  "افتح الرسالة بعنوان «Confirm Your Signup» من Supabase Auth.": "Open the email titled \"Confirm Your Signup\" from Supabase Auth.",
+  "افتح الرسالة بعنوان «تأكيد حسابك في ZeenPumps» من ZeenPumps.": "Open the email titled \"Confirm your ZeenPumps account\" from ZeenPumps.",
   "اضغط رابط التفعيل، فتعود هنا وتدخل مباشرة.": "Click the activation link; you'll come back here and be signed in.",
   "لم تصلك خلال دقيقتين؟ افحص مجلد الرسائل غير المرغوب (Spam).": "Nothing after two minutes? Check your spam folder.",
   "تغيير البريد": "Change email",

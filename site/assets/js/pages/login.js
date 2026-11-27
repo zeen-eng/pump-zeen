@@ -40,7 +40,7 @@ const q = new URLSearchParams(location.search).get('m');
 if (q) msg(q.slice(0, 160), 'ok');
 
 // ── شاشة «تحقق من بريدك» ──
-const MAIL = { 'gmail.com': ['Gmail', 'https://mail.google.com/mail/u/0/#search/from%3Asupabase'], 'googlemail.com': ['Gmail', 'https://mail.google.com/'],
+const MAIL = { 'gmail.com': ['Gmail', 'https://mail.google.com/mail/u/0/#search/ZeenPumps'], 'googlemail.com': ['Gmail', 'https://mail.google.com/'],
   'outlook.com': ['Outlook', 'https://outlook.live.com/mail/'], 'hotmail.com': ['Outlook', 'https://outlook.live.com/mail/'], 'live.com': ['Outlook', 'https://outlook.live.com/mail/'],
   'yahoo.com': ['Yahoo Mail', 'https://mail.yahoo.com/'], 'icloud.com': ['iCloud Mail', 'https://www.icloud.com/mail'] };
 let sentEmail = '', cooldown = 0, cdTimer;
