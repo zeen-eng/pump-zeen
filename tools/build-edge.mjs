@@ -56,7 +56,7 @@ export default {
 };
 function notFound(path) {
   const h = secure(path, new Headers({ 'Content-Type': 'text/html; charset=utf-8' }));
-  return new Response('<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><title>404</title><p>الصفحة غير موجودة — <a href="/">الرئيسية</a></p></html>', { status: 404, headers: h });
+  return new Response('<!doctype html><html lang="en"><meta charset="utf-8"><title>404</title><p>Page not found — <a href="/">Home</a></p></html>', { status: 404, headers: h });
 }
 `;
 mkdirSync(join(ROOT, 'deploy'), { recursive: true });
