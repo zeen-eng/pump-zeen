@@ -1,9 +1,8 @@
 # ═══════════════════════════════════════════════════════════════
 # ترويسات الأمان — يقرؤها Cloudflare Pages تلقائياً
-# بعد إنشاء مشروع Supabase: استبدل YOUR-PROJECT بمعرّف مشروعك في connect-src
 # ═══════════════════════════════════════════════════════════════
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://YOUR-PROJECT.supabase.co; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://rmuwprafvgqwemohrcce.supabase.co; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY

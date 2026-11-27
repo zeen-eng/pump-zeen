@@ -12,8 +12,8 @@ export const CONFIG = {
 
   // من لوحة Supabase: Project Settings → API
   // (المفتاح العام publishable/anon آمن للنشر؛ لا تضع هنا service_role أبداً)
-  supabaseUrl: '',          // مثال: 'https://abcd1234.supabase.co'
-  supabaseKey: '',          // مثال: 'sb_publishable_...'
+  supabaseUrl: 'https://rmuwprafvgqwemohrcce.supabase.co',
+  supabaseKey: 'sb_publishable_RngE_JXMnTFeSDhN_TwhWg_Ef0ge03k',
 
   // إغلاق الجلسة تلقائياً بعد عدم النشاط (بالدقائق)
   idleMinutes: 20,
