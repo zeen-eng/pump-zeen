@@ -84,3 +84,15 @@ button, input, select, textarea { font: inherit; color: inherit; }
 /* الشعار */
 .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: -.01em; direction: ltr; text-decoration: none; }
 .brand svg { width: 28px; height: 28px; }
+
+/* يخفي النص حتى تُطبَّق اللغة (يمنع وميض العربية)، ويظهر تلقائياً بعد 1.2 ث لو تعطّل السكربت */
+html[data-i18n-pending] body { opacity: 0; animation: pz-show 0s 1.2s forwards; }
+@keyframes pz-show { to { opacity: 1; } }
+
+/* مبدّل اللغة */
+.lang-switch { display: inline-flex; align-items: center; gap: 2px; padding: 3px; border: 1px solid var(--rule); background: var(--sheet); border-radius: 999px; }
+.lang-switch svg { width: 16px; height: 16px; margin-inline: 6px 2px; fill: none; stroke: var(--ink-2); stroke-width: 1.6; }
+.lang-switch button { font: inherit; font-size: 13px; font-weight: 600; min-height: 30px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; color: var(--ink-2); cursor: pointer; white-space: nowrap; }
+.lang-switch button[aria-pressed="true"] { background: var(--ink); color: var(--sheet); cursor: default; }
+.lang-switch button.lang-btn:hover { background: var(--sheet-2); color: var(--ink); }
+.lang-switch button:focus-visible { outline: 2px solid var(--water); outline-offset: 1px; }

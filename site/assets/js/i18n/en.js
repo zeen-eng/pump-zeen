@@ -428,4 +428,7 @@ export const EN = {
   "كلمة المرور الجديدة": "New password",
   "أعد كتابتها": "Repeat it",
   "حفظ": "Save",
+  "تعذّر إرسال رسالة التفعيل الآن بسبب إعداد البريد في الخادم. أبلغنا وحاول لاحقاً.": "We couldn't send the activation email right now because of a mail setting on the server. Please let us know and try again later.",
+  "خطأ مؤقت في الخادم. حاول بعد دقائق.": "Temporary server error. Please try again in a few minutes.",
+  "اللغة": "Language",
 };

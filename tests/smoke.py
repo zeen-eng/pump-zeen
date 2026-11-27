@@ -55,6 +55,12 @@ class FakeSupabase:
 
 async def page_with(browser, vp, dark, fake):
     ctx = await browser.new_context(viewport=vp, color_scheme='dark' if dark else 'light')
+    # English is the default: check a fresh visitor first, then run the rest in Arabic
+    fresh = await ctx.new_page(); await fresh.goto(BASE + 'index.html'); await fresh.wait_for_timeout(300)
+    assert await fresh.evaluate("document.documentElement.lang") == 'en', 'English default'
+    assert await fresh.is_visible('.lang-switch button[lang=ar]'), 'language switch visible on first page'
+    await fresh.close()
+    await ctx.add_init_script("try{if(!localStorage.getItem('pz.lang'))localStorage.setItem('pz.lang','ar')}catch(e){}")
     page = await ctx.new_page(); errs = []
     page.on('pageerror', lambda e: errs.append('pageerror: ' + str(e)))
     page.on('console', lambda m: m.type == 'error' and 'Failed to load resource' not in m.text and errs.append('console: ' + m.text))

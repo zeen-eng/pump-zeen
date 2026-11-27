@@ -31,6 +31,8 @@ function friendly(status, body) {
   if (m.includes('weak') || m.includes('password should')) return t('كلمة المرور ضعيفة: 10 أحرف على الأقل وتشمل حروفاً وأرقاماً.');
   if (status === 429 || m.includes('rate')) return t('محاولات كثيرة. انتظر قليلاً ثم أعد المحاولة.');
   if (m.includes('database error saving new user') || m.includes('signups')) return t('التسجيل مغلق حالياً.');
+  if (m.includes('sending') && m.includes('email') || m.includes('smtp') || (status >= 500 && m.includes('unexpected'))) return t('تعذّر إرسال رسالة التفعيل الآن بسبب إعداد البريد في الخادم. أبلغنا وحاول لاحقاً.');
+  if (status >= 500) return t('خطأ مؤقت في الخادم. حاول بعد دقائق.');
   return t('تعذّر إكمال الطلب. حاول مرة أخرى.');
 }
 

@@ -34,7 +34,8 @@
 
 /* شريط علوي في الواجهة: الشعار وزر اللغة */
 .art-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.lang-btn { font-weight: 600; min-height: 36px; border-color: var(--rule); }
+.art-top .lang-switch { padding: 4px; box-shadow: 0 1px 0 var(--rule-soft); }
+.art-top .lang-switch button { min-height: 34px; padding: 0 16px; font-size: 14px; }
 
 /* خطوات إنشاء الحساب: توضح من البداية أن رسالة تفعيل ستصل */
 .howto { list-style: none; counter-reset: h; padding: 0; margin: 0 0 18px; display: grid; gap: 0; border: 1px solid var(--rule); }
