@@ -1,0 +1,33 @@
+/* صفحة الدخول والتسجيل */
+.auth { min-height: 100dvh; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(360px, 1fr); }
+.auth-art { background: var(--sheet); border-inline-end: 1px solid var(--rule); padding: clamp(24px, 4vw, 56px); display: flex; flex-direction: column; gap: 22px; }
+.auth-art h1 { font-size: clamp(30px, 3.4vw, 46px); line-height: 1.1; max-width: 16ch; }
+.auth-art p.lead { font-size: var(--fs-3); color: var(--ink-2); max-width: 52ch; }
+.auth-art .frame { border: 1.5px solid var(--ink); margin-top: auto; }
+.auth-art .frame svg { display: block; width: 100%; height: auto; aspect-ratio: 1000/560; }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--rule); }
+.facts div { padding: 12px 14px 0 0; font-size: var(--fs-1); color: var(--ink-2); }
+.facts b { display: block; font-size: var(--fs-2); color: var(--ink); font-weight: 600; }
+
+.auth-side { display: grid; place-items: center; padding: 28px 20px; }
+.auth-card { width: min(400px, 100%); background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--radius); padding: 28px 26px; }
+#gate.auth { grid-template-columns: 1fr; place-items: center; padding: 20px; }
+.auth-card .brand { margin-bottom: 22px; }
+.auth-card h1, .auth-card h2 { font-size: var(--fs-4); margin-bottom: 6px; }
+.auth-card > p { margin-bottom: 18px; font-size: var(--fs-1); }
+.btn.wide { width: 100%; min-height: 46px; font-size: var(--fs-3); }
+.tabs { display: flex; border-bottom: 1px solid var(--rule); margin-bottom: 20px; }
+.tabs button { flex: 1; min-height: 42px; border: 0; background: none; cursor: pointer; color: var(--ink-2); border-bottom: 2px solid transparent; font-weight: 500; }
+.tabs button[aria-selected=true] { color: var(--ink); border-bottom-color: var(--ink); }
+.msg { min-height: 22px; margin-top: 12px; font-size: var(--fs-1); }
+.msg.bad { color: var(--fault); } .msg.ok { color: var(--ok); }
+.linklike { background: none; border: 0; padding: 0; color: var(--ink-2); text-decoration: underline; cursor: pointer; font-size: var(--fs-1); }
+.meter { height: 4px; background: var(--rule-soft); margin-top: 6px; }
+.meter i { display: block; height: 100%; width: 0; background: var(--fault); transition: width .2s; }
+.secure { display: flex; gap: 10px; margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 12px; color: var(--ink-2); }
+.secure svg { width: 18px; height: 18px; flex: none; }
+@media (max-width: 900px) {
+  .auth { grid-template-columns: minmax(0, 1fr); }
+  .auth-art { border-inline-end: 0; border-bottom: 1px solid var(--rule); }
+  .facts { grid-template-columns: 1fr; }
+}

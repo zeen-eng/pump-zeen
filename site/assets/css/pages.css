@@ -1,0 +1,32 @@
+/* صفحات المحتوى: الكتالوج ولوحة الإدارة */
+.page { max-width: 1100px; margin: 0 auto; padding: 32px max(3vw, 16px) 60px; }
+.page > h1 { font-size: var(--fs-5); line-height: 1.1; }
+.page > .lead { font-size: var(--fs-3); color: var(--ink-2); max-width: 70ch; margin: 10px 0 20px; }
+.callout { background: var(--sheet); border: 1px solid var(--rule); border-inline-start: 3px solid var(--ink); padding: 14px 16px; margin-bottom: 18px; }
+.callout p { color: var(--ink-2); font-size: var(--fs-1); margin-top: 4px; }
+.toc { display: flex; gap: 6px; position: sticky; top: var(--bar-h); background: var(--desk); padding: 10px 0; z-index: 2; }
+.toc a { flex: none; padding: 6px 12px; border: 1px solid var(--rule); background: var(--sheet); text-decoration: none; font-size: var(--fs-1); border-radius: var(--radius); }
+.cat-sec { margin-top: 28px; }
+.cat-sec > h2 { font-size: var(--fs-4); padding-bottom: 8px; border-bottom: 1.5px solid var(--ink); }
+.cat-sec > p { margin: 8px 0 12px; }
+.src { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px 18px; background: var(--sheet); border: 1px solid var(--rule); padding: 14px 16px; margin-bottom: 14px; }
+.src small { display: block; font-size: 11px; color: var(--ink-3); }
+.src a { font-weight: 500; overflow-wrap: anywhere; }
+.src p { grid-column: 1 / -1; }
+.pump-card { background: var(--sheet); border: 1px solid var(--rule); padding: 14px 16px; margin-bottom: 10px; scroll-margin-top: 120px; }
+.pump-card header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px; align-items: center; margin-bottom: 8px; }
+.pump-card header > div { flex: 1 1 220px; }
+.pump-card .spark { flex: none; }
+.pump-card h3 { font-size: var(--fs-3); direction: ltr; text-align: right; }
+.pump-card .spark svg { width: 120px; height: 40px; }
+.pump-card:target { border-color: var(--ink); box-shadow: 0 0 0 2px var(--water-bg); }
+
+/* الإدارة */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); border-top: 1px solid var(--rule); border-inline-start: 1px solid var(--rule); background: var(--sheet); margin: 18px 0 8px; }
+.stats div { padding: 14px 16px; border-bottom: 1px solid var(--rule); border-inline-end: 1px solid var(--rule); }
+.stats small { display: block; color: var(--ink-2); font-size: 12px; }
+.stats b { font-size: 28px; font-weight: 600; }
+.panel { background: var(--sheet); border: 1px solid var(--rule); margin-top: 18px; }
+.panel > h2 { font-size: var(--fs-3); padding: 12px 16px; border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.panel > .body { padding: 6px 8px 10px; }
+@media (max-width: 700px) { .src { grid-template-columns: 1fr; } }

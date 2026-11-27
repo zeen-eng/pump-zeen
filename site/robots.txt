@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /$
+Allow: /index.html
+Allow: /catalog
+Disallow: /app
+Disallow: /admin
+Disallow: /reset

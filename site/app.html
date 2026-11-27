@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>المصمم — pump.zeen</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/scene.css">
+<link rel="stylesheet" href="assets/css/report.css">
+<link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+
+<!-- بوابة الدخول (معاينة Claude فقط؛ على نطاقك تُستخدم صفحة index.html) -->
+<section id="gate" class="auth hidden">
+  <div class="auth-card">
+    <a class="brand" href="#" aria-label="pump.zeen"><span data-logo></span>pump.zeen</a>
+    <h1>ادخل إلى المصمم</h1>
+    <p class="muted">الدخول بحسابك في Claude. تصاميمك في مساحة خاصة لا يقرؤها غيرك.</p>
+    <button class="btn primary wide" id="gateBtn">تسجيل الدخول</button>
+    <p id="gateMsg" class="small muted" role="status"></p>
+  </div>
+</section>
+
+<div id="app" class="hidden">
+  <header class="topbar">
+    <a class="brand" href="app.html" aria-label="pump.zeen"><span data-logo></span>pump.zeen</a>
+    <label class="project"><span>المشروع</span><input id="projName" maxlength="60" placeholder="اسم المشروع" autocomplete="off"></label>
+    <button class="btn quiet" id="newBtn" data-icon="plus"><span class="lbl">جديد</span></button>
+    <button class="btn quiet" id="savedBtn" data-icon="folder"><span class="lbl">تصاميمي</span></button>
+    <button class="btn quiet" id="envBtn" data-icon="gear"><span class="lbl">الظروف</span></button>
+    <a class="btn quiet" href="catalog.html" data-icon="book"><span class="lbl">الكتالوج</span></a>
+    <a class="btn quiet hidden" id="adminLink" href="admin.html" data-icon="shield"><span class="lbl">الإدارة</span></a>
+    <div class="user-chip"><span>المهندس</span><b id="uname"></b></div>
+    <button class="btn quiet" id="outBtn" data-icon="out"><span class="lbl">خروج</span></button>
+  </header>
+
+  <main class="workspace">
+    <div>
+      <div class="sheet">
+        <div class="sheet-frame">
+          <svg id="scene" viewBox="0 0 1000 560" role="img" aria-label="مقطع رأسي لشبكة الضخ"></svg>
+          <div class="titleblock">
+            <div><small>المشروع</small><b id="tbProject">—</b></div>
+            <div><small>المبنى</small><b id="tbBuilding">—</b></div>
+            <div><small>المضخة</small><b id="tbPump">—</b></div>
+            <div><small>التاريخ</small><b id="tbDate" class="num">—</b></div>
+            <div><small>اللوحة</small><b class="num">PZ-01 · غير مقياسي</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="controlbar">
+        <div class="status" role="status"><span class="lamp" id="lamp"></span><span id="statusMsg"></span></div>
+        <button class="btn" id="run" disabled data-icon="play"><span>تشغيل</span></button>
+        <button class="btn primary" id="analyze" disabled data-icon="doc"><span>المذكرة الحسابية</span></button>
+      </div>
+    </div>
+    <aside class="inspector" id="inspector" aria-label="الخصائص"></aside>
+  </main>
+</div>
+
+<script type="module" src="assets/js/pages/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+# ═══════════════════════════════════════════════════════════════
+# ترويسات الأمان — يقرؤها Cloudflare Pages تلقائياً
+# بعد إنشاء مشروع Supabase: استبدل YOUR-PROJECT بمعرّف مشروعك في connect-src
+# ═══════════════════════════════════════════════════════════════
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://YOUR-PROJECT.supabase.co; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+
+/admin*
+  Cache-Control: no-store
+  X-Robots-Tag: noindex, nofollow
+
+/app*
+  Cache-Control: no-store
+
+/assets/*
+  Cache-Control: public, max-age=3600

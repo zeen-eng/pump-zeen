@@ -1,0 +1,49 @@
+/* عناصر الرسم داخل المشهد (SVG) */
+#scene { --line: var(--ink); }
+.s-ground { stroke: var(--ink); stroke-width: 2; }
+.s-thin { stroke: var(--ink); stroke-width: 1; fill: none; }
+.s-hair { stroke: var(--rule); stroke-width: .75; fill: none; }
+.s-fill { fill: var(--sheet); stroke: var(--ink); stroke-width: 1.25; }
+.s-slab { fill: var(--ink); }
+.s-win { fill: var(--sheet-2); stroke: var(--ink-2); stroke-width: .75; }
+.s-water { fill: var(--water-bg); }
+.s-wline { stroke: var(--water); stroke-width: 1.5; fill: none; }
+.s-txt { fill: var(--ink); font: 500 12px var(--font); }
+.s-txt.mute { fill: var(--ink-2); font-weight: 400; }
+.s-txt.big { font-size: 14px; font-weight: 600; }
+.s-num { direction: ltr; unicode-bidi: isolate; }
+.s-dim { stroke: var(--ink-2); stroke-width: .75; fill: none; }
+.s-arrow { fill: var(--ink-2); }
+.s-tagbg { fill: var(--sheet); }
+
+.pipe-wall { fill: none; stroke: var(--ink); stroke-linecap: butt; stroke-linejoin: round; }
+.pipe-core { fill: none; stroke-linecap: butt; stroke-linejoin: round; }
+.pipe-core.pvc { stroke: var(--sheet); } .pipe-core.steel { stroke: var(--ink-2); } .pipe-core.galv { stroke: var(--hatch); } .pipe-core.cast { stroke: var(--ink-3); }
+.pipe-flow { fill: none; stroke: var(--water); stroke-linecap: round; stroke-dasharray: 8 10; animation: flow .8s linear infinite; }
+@keyframes flow { to { stroke-dashoffset: -18; } }
+.pipe-hit { fill: none; stroke: transparent; stroke-width: 24; cursor: pointer; pointer-events: stroke; }
+.is-sel .pipe-wall { stroke: var(--water); }
+
+.hot { cursor: pointer; outline: none; }
+.hot:hover .s-fill, .hot:focus-visible .s-fill { stroke: var(--water); }
+.hot.is-sel .s-fill { stroke: var(--water); stroke-width: 2; }
+
+.slot { cursor: pointer; outline: none; }
+.slot { pointer-events: all; }
+.slot rect { fill: transparent; stroke: var(--ink-2); stroke-width: 1.2; stroke-dasharray: 6 5; }
+.slot text { fill: var(--ink-2); font: 500 13px var(--font); }
+.slot .plus { stroke: var(--ink-2); stroke-width: 1.5; }
+.slot:hover rect, .slot:focus-visible rect { stroke: var(--ink); stroke-dasharray: none; }
+.slot:hover text, .slot:focus-visible text { fill: var(--ink); }
+.slot.next rect { stroke: var(--ink); stroke-width: 1.5; }
+.slot.next text { fill: var(--ink); font-weight: 600; }
+
+.fx-drop { fill: var(--water); animation: drop 1s ease-in infinite; }
+@keyframes drop { from { transform: translateY(0); opacity: 1; } to { transform: translateY(44px); opacity: 0; } }
+.fx-bub { fill: var(--sheet); stroke: var(--water); stroke-width: 1; animation: bub 1.2s ease-out infinite; }
+@keyframes bub { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-22px); opacity: 0; } }
+.fx-shake { animation: shake .12s linear infinite; }
+@keyframes shake { 50% { transform: translate(1.2px, -.8px); } }
+.fx-spin { animation: spin .6s linear infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .pipe-flow, .fx-drop, .fx-bub, .fx-shake, .fx-spin { animation: none; } }

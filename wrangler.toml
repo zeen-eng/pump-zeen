@@ -1,0 +1,9 @@
+# النشر اليدوي (اختياري): node tools/build-worker.mjs && npx wrangler deploy
+name = "pump-zeen"
+main = "deploy/worker.js"
+compatibility_date = "2026-11-01"
+workers_dev = false
+routes = [
+  { pattern = "zeenpumps.com", custom_domain = true },
+  { pattern = "www.zeenpumps.com", custom_domain = true },
+]

@@ -1,0 +1,47 @@
+/* المذكرة الحسابية (التحليل) واختيار المضخة والكتالوج */
+.verdict { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: center; padding: 14px 16px; border: 1px solid; border-radius: var(--radius); margin-bottom: 18px; }
+.verdict .lamp { grid-row: span 2; width: 14px; height: 14px; }
+.verdict b { font-size: 19px; }
+.verdict p { font-size: var(--fs-1); color: var(--ink-2); }
+.verdict.ok { border-color: var(--ok); background: var(--ok-bg); } .verdict.warn { border-color: var(--warn); background: var(--warn-bg); } .verdict.bad { border-color: var(--fault); background: var(--fault-bg); }
+
+.memo-sec { margin-top: 22px; }
+.memo-sec > h3 { display: flex; gap: 10px; align-items: baseline; font-size: var(--fs-3); padding-bottom: 8px; border-bottom: 1.5px solid var(--ink); margin-bottom: 12px; }
+.memo-sec > h3 span { font-size: var(--fs-1); color: var(--ink-3); font-weight: 500; }
+
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border-top: 1px solid var(--rule); border-inline-start: 1px solid var(--rule); }
+.kpi-grid > div { padding: 12px 14px; border-bottom: 1px solid var(--rule); border-inline-end: 1px solid var(--rule); }
+.kpi-grid small { display: block; font-size: 12px; color: var(--ink-2); }
+.kpi-grid b { font-size: 22px; font-weight: 600; }
+.kpi-grid i { font-style: normal; font-size: 12px; color: var(--ink-3); margin-inline-start: 4px; }
+
+.chart { border: 1px solid var(--rule); padding: 10px; }
+.chart svg { display: block; width: 100%; height: auto; }
+.chart .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--ink-2); padding: 8px 4px 0; }
+.chart .legend span { display: inline-flex; align-items: center; gap: 6px; }
+.chart .legend i { width: 18px; height: 0; border-top: 2px solid var(--c); display: inline-block; }
+.chart .legend i.dash { border-top-style: dashed; }
+
+.checks td:first-child { width: 120px; }
+.checks .fixes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.checks td p { color: var(--ink-2); margin-top: 2px; }
+
+.pump-table tr.rec td:first-child b::after { content: "موصى بها"; margin-inline-start: 8px; font-size: 11px; font-weight: 600; padding: 1px 6px; background: var(--primary); color: var(--on-primary); border-radius: 2px; }
+.pump-table tr { cursor: pointer; }
+.pump-table tr:hover td { background: var(--sheet-2); }
+.pump-table tr.cur td { background: var(--water-bg); }
+.pump-table svg { width: 90px; height: 32px; display: block; }
+.source-line { margin-top: 14px; font-size: 12px; color: var(--ink-2); }
+.source-line a { color: var(--ink); }
+
+@media (max-width: 640px) {
+  .pump-table .opt { display: none; }
+  .checks td:first-child { width: auto; }
+  .dialog-body, .dialog-head { padding-inline: 14px; }
+}
+@media print {
+  body > *:not(.overlay) { display: none !important; }
+  .overlay { position: static; background: none; backdrop-filter: none; padding: 0; }
+  .dialog { border: 0; box-shadow: none; max-height: none; width: 100%; }
+  .dialog-head .x-btn, .no-print, .fixes { display: none !important; }
+}

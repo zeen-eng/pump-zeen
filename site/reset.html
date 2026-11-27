@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>كلمة مرور جديدة — pump.zeen</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+<main class="auth" style="grid-template-columns:1fr">
+  <section class="auth-side">
+    <form class="auth-card" id="f" novalidate>
+      <a class="brand" href="index.html" aria-label="pump.zeen"><span data-logo></span>pump.zeen</a>
+      <h1>كلمة مرور جديدة</h1>
+      <p class="muted">10 أحرف على الأقل، تشمل حروفاً وأرقاماً.</p>
+      <div class="field"><label for="p1">كلمة المرور الجديدة</label><input class="input" id="p1" type="password" autocomplete="new-password" dir="ltr" required></div>
+      <div class="field"><label for="p2">أعد كتابتها</label><input class="input" id="p2" type="password" autocomplete="new-password" dir="ltr" required></div>
+      <button class="btn primary wide" type="submit">حفظ</button>
+      <p class="msg" id="msg" role="status"></p>
+    </form>
+  </section>
+</main>
+<script type="module" src="assets/js/pages/reset.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+/* ═══════════════════════════════════════════════════════════════
+   الألوان والخطوط والمقاسات — غيّر الهوية من هنا فقط
+   الفكرة: لوحة رسم هندسي. فاتح = ورق أبيض وحبر، داكن = مخطط أزرق (Blueprint)
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  color-scheme: light dark;
+  --desk:      light-dark(#e6eaee, #06182b);
+  --sheet:     light-dark(#ffffff, #0b2440);
+  --sheet-2:   light-dark(#f5f7f9, #0e2b4b);
+  --ink:       light-dark(#101b25, #dceaf8);
+  --ink-2:     light-dark(#4a5b69, #93b3d1);
+  --ink-3:     light-dark(#7d8c98, #6f92b4);
+  --rule:      light-dark(#c3cdd5, #2b5279);
+  --rule-soft: light-dark(#e1e7ec, #163a5f);
+  --hatch:     light-dark(#b9c4cd, #2a537c);
+  --water:     light-dark(#1b74c9, #63bdff);
+  --water-bg:  light-dark(#d6e9fa, #123e66);
+  --primary:   light-dark(#101b25, #dceaf8);
+  --on-primary:light-dark(#ffffff, #06182b);
+  --ok:        light-dark(#25734a, #62d39c);
+  --warn:      light-dark(#9a5b00, #f0bf55);
+  --fault:     light-dark(#c03a0c, #ff8d57);
+  --ok-bg:     light-dark(#e6f2eb, #0f3b33);
+  --warn-bg:   light-dark(#fbf1df, #3a3218);
+  --fault-bg:  light-dark(#fbe9e1, #43231b);
+  --focus:     light-dark(#1b74c9, #63bdff);
+
+  --font: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --fs-1: 13px; --fs-2: 15px; --fs-3: 17px; --fs-4: 22px; --fs-5: 34px;
+  --radius: 3px;
+  --gap: 16px;
+  --bar-h: 56px;
+}
+:root[data-theme=light] { color-scheme: light; }
+:root[data-theme=dark]  { color-scheme: dark; }
