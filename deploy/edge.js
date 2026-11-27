@@ -1,7 +1,7 @@
 // مولَّد بواسطة tools/build-edge.mjs — لا تعدّله يدوياً
-const ORIGIN = 'https://raw.githubusercontent.com/zeen-eng/pump-zeen/f25bd899ea3d7651792f5f2d11bbe1cd018de74b/site';
+const ORIGIN = 'https://raw.githubusercontent.com/zeen-eng/pump-zeen/0e442b4fc668aa61fdec2731c465fefa1c4a3ee5/site';
 const RULES = [{"pattern":"/*","headers":{"Content-Security-Policy":"default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://rmuwprafvgqwemohrcce.supabase.co; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'; upgrade-insecure-requests","Strict-Transport-Security":"max-age=63072000; includeSubDomains; preload","X-Content-Type-Options":"nosniff","X-Frame-Options":"DENY","Referrer-Policy":"no-referrer","Permissions-Policy":"camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()","Cross-Origin-Opener-Policy":"same-origin","Cross-Origin-Resource-Policy":"same-origin","Cache-Control":"no-cache"}},{"pattern":"/admin*","headers":{"Cache-Control":"no-store","X-Robots-Tag":"noindex, nofollow"}},{"pattern":"/app*","headers":{"Cache-Control":"no-store"}}];
-const VERSION = 'f25bd899ea3d';
+const VERSION = '0e442b4fc668';
 const TYPES = { html: 'text/html; charset=utf-8', css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8', svg: 'image/svg+xml', txt: 'text/plain; charset=utf-8', json: 'application/json', png: 'image/png', ico: 'image/x-icon' };
 const CANONICAL = 'zeenpumps.com';
 const esc = s => s.replace(/[.+?^$(){}|[\]\\]/g, '\\$&');
