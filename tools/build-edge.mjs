@@ -28,7 +28,7 @@ const ORIGIN = 'https://raw.githubusercontent.com/${REPO}/${COMMIT}/site';
 const RULES = ${JSON.stringify(rules)};
 const TYPES = { html: 'text/html; charset=utf-8', css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8', svg: 'image/svg+xml', txt: 'text/plain; charset=utf-8', json: 'application/json', png: 'image/png', ico: 'image/x-icon' };
 const CANONICAL = 'zeenpumps.com';
-const esc = s => s.replace(/[.+?^\${}()|[\\]\\\\]/g, '\\\\$&');
+const esc = s => s.replace(/[.+?^$(){}|[\\]\\\\]/g, '\\\\$&');
 const match = (pat, p) => new RegExp('^' + esc(pat).replace(/\\*/g, '.*') + '$').test(p);
 const SAFE = /^\\/(?:[A-Za-z0-9_-]+\\/)*[A-Za-z0-9_-]+\\.(html|css|js|svg|txt|json|png|ico)$/;
 
