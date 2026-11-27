@@ -22,20 +22,22 @@
    - Site URL: `https://zeenpumps.com`
    - Redirect URLs: `https://zeenpumps.com/**`
 
-## 2) الاستضافة: Cloudflare Workers + GitHub (مرة واحدة)
+## 2) الاستضافة: Cloudflare Worker «pump-zeen» (جاهز)
 
-1. dash.cloudflare.com → **Workers & Pages → Create → Import a repository**.
-2. اربط GitHub واختر `zeen-eng/pump-zeen`.
-3. الإعدادات:
-   - Project name: `pump-zeen`
-   - Build command: `node tools/build-worker.mjs`
-   - Deploy command: `npx wrangler deploy`
-4. **Deploy**. بعدها كل `git push` إلى `main` يُنشر تلقائياً.
+الـ Worker يقدّم ملفات `site/` من GitHub مثبتةً على commit محدد، مع ترويسات الأمان من `site/_headers`.
+ملفه مولَّد في `deploy/edge.js`.
+
+**لنشر أي تعديل:**
+```bash
+git push                                   # ارفع التعديل
+node tools/build-edge.mjs $(git rev-parse HEAD)   # ثبّت الـ Worker على الـ commit الجديد
+# ثم ارفع deploy/edge.js إلى Worker «pump-zeen» (Claude يفعل ذلك، أو: npx wrangler deploy deploy/edge.js --name pump-zeen)
+```
+المستودع يجب أن يبقى **عاماً** لهذه الطريقة. إن جعلته خاصاً فاستخدم بدلاً منها `node tools/build-worker.mjs` (يحزم الموقع كاملاً في `deploy/worker.js`) واربط الـ Worker بـ GitHub من لوحة Cloudflare.
 
 ## 3) النطاق
 
-Worker `pump-zeen` → **Settings → Domains & Routes → Add → Custom domain**: أضف `zeenpumps.com` ثم `www.zeenpumps.com` (يُحوَّل تلقائياً إلى الأصل).
-وفي النطاق: **SSL/TLS → Full (strict)**، و**Edge Certificates → Always Use HTTPS + HSTS**.
+تم: `zeenpumps.com` و`www.zeenpumps.com` (يُحوَّل للأصل) مربوطان بالـ Worker، وSSL على Full (strict)، وHTTPS إجباري، وTLS 1.2 كحد أدنى.
 
 ## 4) حماية إضافية لصفحة الإدارة (اختياري)
 
