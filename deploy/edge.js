@@ -1,6 +1,7 @@
 // مولَّد بواسطة tools/build-edge.mjs — لا تعدّله يدوياً
-const ORIGIN = 'https://raw.githubusercontent.com/zeen-eng/pump-zeen/632184b09321dca0859ef085983ce64bd9ef70f0/site';
-const RULES = [{"pattern":"/*","headers":{"Content-Security-Policy":"default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://rmuwprafvgqwemohrcce.supabase.co; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'; upgrade-insecure-requests","Strict-Transport-Security":"max-age=63072000; includeSubDomains; preload","X-Content-Type-Options":"nosniff","X-Frame-Options":"DENY","Referrer-Policy":"no-referrer","Permissions-Policy":"camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()","Cross-Origin-Opener-Policy":"same-origin","Cross-Origin-Resource-Policy":"same-origin"}},{"pattern":"/admin*","headers":{"Cache-Control":"no-store","X-Robots-Tag":"noindex, nofollow"}},{"pattern":"/app*","headers":{"Cache-Control":"no-store"}},{"pattern":"/assets/*","headers":{"Cache-Control":"public, max-age=3600"}}];
+const ORIGIN = 'https://raw.githubusercontent.com/zeen-eng/pump-zeen/075a19cc824562a28e0336c2ab573f8f2f6d6567/site';
+const RULES = [{"pattern":"/*","headers":{"Content-Security-Policy":"default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://rmuwprafvgqwemohrcce.supabase.co; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'; upgrade-insecure-requests","Strict-Transport-Security":"max-age=63072000; includeSubDomains; preload","X-Content-Type-Options":"nosniff","X-Frame-Options":"DENY","Referrer-Policy":"no-referrer","Permissions-Policy":"camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()","Cross-Origin-Opener-Policy":"same-origin","Cross-Origin-Resource-Policy":"same-origin","Cache-Control":"no-cache"}},{"pattern":"/admin*","headers":{"Cache-Control":"no-store","X-Robots-Tag":"noindex, nofollow"}},{"pattern":"/app*","headers":{"Cache-Control":"no-store"}}];
+const VERSION = '075a19cc8245';
 const TYPES = { html: 'text/html; charset=utf-8', css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8', svg: 'image/svg+xml', txt: 'text/plain; charset=utf-8', json: 'application/json', png: 'image/png', ico: 'image/x-icon' };
 const CANONICAL = 'zeenpumps.com';
 const esc = s => s.replace(/[.+?^$(){}|[\]\\]/g, '\\$&');
@@ -21,7 +22,10 @@ export default {
     const res = await fetch(ORIGIN + path, { cf: { cacheTtl: 31536000, cacheEverything: true } });
     if (!res.ok) return notFound(path);
     const h = secure(path, new Headers({ 'Content-Type': TYPES[path.split('.').pop()] }));
-    if (!h.has('Cache-Control')) h.set('Cache-Control', 'public, max-age=300');
+    if (!h.has('Cache-Control')) h.set('Cache-Control', 'no-cache');
+    const etag = '"' + VERSION + '"';   // يتغير مع كل نشر، فيعرف المتصفح أن لديه نسخة قديمة
+    h.set('ETag', etag);
+    if ((req.headers.get('If-None-Match') || '').includes(etag)) return new Response(null, { status: 304, headers: h });
     return new Response(req.method === 'HEAD' ? null : res.body, { headers: h });
   },
 };
