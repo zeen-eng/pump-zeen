@@ -26,6 +26,7 @@ for (const line of readFileSync(join(ROOT, 'site/_headers'), 'utf8').split('\n')
 const code = `// مولَّد بواسطة tools/build-edge.mjs — لا تعدّله يدوياً
 const ORIGIN = 'https://raw.githubusercontent.com/${REPO}/${COMMIT}/site';
 const RULES = ${JSON.stringify(rules)};
+const VERSION = '${COMMIT.slice(0, 12)}';
 const TYPES = { html: 'text/html; charset=utf-8', css: 'text/css; charset=utf-8', js: 'text/javascript; charset=utf-8', svg: 'image/svg+xml', txt: 'text/plain; charset=utf-8', json: 'application/json', png: 'image/png', ico: 'image/x-icon' };
 const CANONICAL = 'zeenpumps.com';
 const esc = s => s.replace(/[.+?^$(){}|[\\]\\\\]/g, '\\\\$&');
@@ -46,7 +47,10 @@ export default {
     const res = await fetch(ORIGIN + path, { cf: { cacheTtl: 31536000, cacheEverything: true } });
     if (!res.ok) return notFound(path);
     const h = secure(path, new Headers({ 'Content-Type': TYPES[path.split('.').pop()] }));
-    if (!h.has('Cache-Control')) h.set('Cache-Control', 'public, max-age=300');
+    if (!h.has('Cache-Control')) h.set('Cache-Control', 'no-cache');
+    const etag = '"' + VERSION + '"';   // يتغير مع كل نشر، فيعرف المتصفح أن لديه نسخة قديمة
+    h.set('ETag', etag);
+    if ((req.headers.get('If-None-Match') || '').includes(etag)) return new Response(null, { status: 304, headers: h });
     return new Response(req.method === 'HEAD' ? null : res.body, { headers: h });
   },
 };

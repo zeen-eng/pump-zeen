@@ -1,5 +1,6 @@
 # ═══════════════════════════════════════════════════════════════
-# ترويسات الأمان — يقرؤها Cloudflare Pages تلقائياً
+# ترويسات الأمان والتخزين المؤقت — يقرؤها tools/build-edge.mjs
+# no-cache: المتصفح يتحقق من وجود نسخة أحدث في كل زيارة (ETag)، فيصل أي تحديث فوراً
 # ═══════════════════════════════════════════════════════════════
 /*
   Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://rmuwprafvgqwemohrcce.supabase.co; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
@@ -10,6 +11,7 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
+  Cache-Control: no-cache
 
 /admin*
   Cache-Control: no-store
@@ -17,6 +19,3 @@
 
 /app*
   Cache-Control: no-store
-
-/assets/*
-  Cache-Control: public, max-age=3600
