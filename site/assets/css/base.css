@@ -21,7 +21,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 40px; padding: 0 16px; border: 1px solid var(--rule); border-radius: var(--radius);
-  background: var(--sheet); color: var(--ink); font-weight: 500; font-size: var(--fs-2); cursor: pointer;
+  background: var(--sheet); color: var(--ink); font-weight: 500; font-size: var(--fs-2); cursor: pointer; white-space: nowrap;
   transition: background .15s, border-color .15s;
 }
 .btn:hover { border-color: var(--ink-2); }

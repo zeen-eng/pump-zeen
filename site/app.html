@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex">
-<title>المصمم — pump.zeen</title>
+<title data-en="Designer — pump.zeen">المصمم — pump.zeen</title>
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,9 +23,9 @@
 <section id="gate" class="auth hidden">
   <div class="auth-card">
     <a class="brand" href="#" aria-label="pump.zeen"><span data-logo></span>pump.zeen</a>
-    <h1>ادخل إلى المصمم</h1>
-    <p class="muted">الدخول بحسابك في Claude. تصاميمك في مساحة خاصة لا يقرؤها غيرك.</p>
-    <button class="btn primary wide" id="gateBtn">تسجيل الدخول</button>
+    <h1 data-i18n>ادخل إلى المصمم</h1>
+    <p class="muted" data-i18n>الدخول بحسابك في Claude. تصاميمك في مساحة خاصة لا يقرؤها غيرك.</p>
+    <button class="btn primary wide" id="gateBtn" data-i18n>تسجيل الدخول</button>
     <p id="gateMsg" class="small muted" role="status"></p>
   </div>
 </section>
@@ -33,37 +33,38 @@
 <div id="app" class="hidden">
   <header class="topbar">
     <a class="brand" href="app.html" aria-label="pump.zeen"><span data-logo></span>pump.zeen</a>
-    <label class="project"><span>المشروع</span><input id="projName" maxlength="60" placeholder="اسم المشروع" autocomplete="off"></label>
-    <button class="btn quiet" id="newBtn" data-icon="plus"><span class="lbl">جديد</span></button>
-    <button class="btn quiet" id="savedBtn" data-icon="folder"><span class="lbl">تصاميمي</span></button>
-    <button class="btn quiet" id="envBtn" data-icon="gear"><span class="lbl">الظروف</span></button>
-    <a class="btn quiet" href="catalog.html" data-icon="book"><span class="lbl">الكتالوج</span></a>
-    <a class="btn quiet hidden" id="adminLink" href="admin.html" data-icon="shield"><span class="lbl">الإدارة</span></a>
-    <div class="user-chip"><span>المهندس</span><b id="uname"></b></div>
-    <button class="btn quiet" id="outBtn" data-icon="out"><span class="lbl">خروج</span></button>
+    <label class="project"><span data-i18n>المشروع</span><input id="projName" maxlength="60" placeholder="اسم المشروع" data-i18n-ph autocomplete="off"></label>
+    <button class="btn quiet" id="newBtn" data-icon="plus"><span class="lbl" data-i18n>جديد</span></button>
+    <button class="btn quiet" id="savedBtn" data-icon="folder"><span class="lbl" data-i18n>تصاميمي</span></button>
+    <button class="btn quiet" id="envBtn" data-icon="gear"><span class="lbl" data-i18n>الظروف</span></button>
+    <a class="btn quiet" href="catalog.html" data-icon="book"><span class="lbl" data-i18n>الكتالوج</span></a>
+    <a class="btn quiet hidden" id="adminLink" href="admin.html" data-icon="shield"><span class="lbl" data-i18n>الإدارة</span></a>
+    <span id="langSlot"></span>
+    <div class="user-chip"><span data-i18n>المهندس</span><b id="uname"></b></div>
+    <button class="btn quiet" id="outBtn" data-icon="out"><span class="lbl" data-i18n>خروج</span></button>
   </header>
 
   <main class="workspace">
     <div>
       <div class="sheet">
         <div class="sheet-frame">
-          <svg id="scene" viewBox="0 0 1000 560" role="img" aria-label="مقطع رأسي لشبكة الضخ"></svg>
+          <svg id="scene" viewBox="0 0 1000 560" role="img" aria-label="مقطع رأسي لشبكة الضخ" data-i18n-aria direction="rtl"></svg>
           <div class="titleblock">
-            <div><small>المشروع</small><b id="tbProject">—</b></div>
-            <div><small>المبنى</small><b id="tbBuilding">—</b></div>
-            <div><small>المضخة</small><b id="tbPump">—</b></div>
-            <div><small>التاريخ</small><b id="tbDate" class="num">—</b></div>
-            <div><small>اللوحة</small><b class="num">PZ-01 · غير مقياسي</b></div>
+            <div><small data-i18n>المشروع</small><b id="tbProject">—</b></div>
+            <div><small data-i18n>المبنى</small><b id="tbBuilding">—</b></div>
+            <div><small data-i18n>المضخة</small><b id="tbPump">—</b></div>
+            <div><small data-i18n>التاريخ</small><b id="tbDate" class="num">—</b></div>
+            <div><small data-i18n>اللوحة</small><b class="num" data-i18n>PZ-01 · غير مقياسي</b></div>
           </div>
         </div>
       </div>
       <div class="controlbar">
         <div class="status" role="status"><span class="lamp" id="lamp"></span><span id="statusMsg"></span></div>
-        <button class="btn" id="run" disabled data-icon="play"><span>تشغيل</span></button>
-        <button class="btn primary" id="analyze" disabled data-icon="doc"><span>المذكرة الحسابية</span></button>
+        <button class="btn" id="run" disabled data-icon="play"><span data-i18n>تشغيل</span></button>
+        <button class="btn primary" id="analyze" disabled data-icon="doc"><span data-i18n>المذكرة الحسابية</span></button>
       </div>
     </div>
-    <aside class="inspector" id="inspector" aria-label="الخصائص"></aside>
+    <aside class="inspector" id="inspector" aria-label="الخصائص" data-i18n-aria></aside>
   </main>
 </div>
 

@@ -12,12 +12,14 @@ import { runChecks, verdict } from '../engine/checks.js';
 import { requiredLengths, defaultPipes, fitToCurve } from '../engine/recommend.js';
 import { BUILDINGS } from '../data/buildings.js';
 import { byId } from '../data/pumps.js';
-import { renderScene } from '../ui/scene.js';
+import { renderScene, setLevels, PRIME_TOTAL } from '../ui/scene.js';
 import { renderInspector, readout } from '../ui/inspector.js';
 import { buildingPicker, pumpPicker } from '../ui/pickers.js';
 import { openAnalysis } from '../ui/analysis.js';
 import { openSaved } from '../ui/saved.js';
 import { toast, confirmButton, closeDialog, ICON, LOGO } from '../ui/common.js';
+import { t, langButton } from '../i18n/index.js';
+import { cleanDesign } from '../core/sanitize.js';
 
 let currentId = null, R = null;
 const GEOMETRY_KEYS = /^(building\.|site|ground\.depth|pump\.)/;
@@ -87,28 +89,28 @@ function paint(s, ui, why) {
   paintStatus(s, ui);
   paintTitle(s);
   $('#run').disabled = !R; $('#analyze').disabled = !R;
-  $('#run').querySelector('span').textContent = ui.running ? 'إيقاف' : 'تشغيل';
+  $('#run').querySelector('span').textContent = ui.running ? t('إيقاف') : t('تشغيل');
 }
 function paintStatus(s, ui) {
   const lamp = $('#lamp'), msg = $('#statusMsg');
-  let k = '', m = !s.building ? 'ابدأ بإضافة المبنى من المربع المنقّط.' : !s.roof ? 'أضف الخزان العلوي فوق السطح.' : !s.ground ? 'أضف الخزان الأرضي.' : 'أضف المضخة لتوصيل الخزانين.';
+  let k = '', m = !s.building ? t('ابدأ بإضافة المبنى من المربع المنقّط.') : !s.roof ? t('أضف الخزان العلوي فوق السطح.') : !s.ground ? t('أضف الخزان الأرضي.') : t('أضف المضخة لتوصيل الخزانين.');
   if (R) {
     if (ui.running) {
-      if (R.noLift) { k = 'bad'; m = 'المحرك يدور والماء لا يصعد: ضاغط المضخة أقل من الرفع.'; }
-      else if (R.air) { k = 'bad'; m = 'فقاعات هواء — ماسورة السحب لا تصل إلى سطح الماء.'; }
-      else if (R.leak) { k = 'bad'; m = 'تسرّب — ماسورة الدفع لا تصل إلى الخزان العلوي.'; }
-      else if (R.cavitation) { k = 'bad'; m = 'تكهف — صوت حصى داخل المضخة، NPSH المتاح أقل من المطلوب.'; }
-      else { k = 'ok'; m = `يضخ ${n2(R.q)} م³/س عند ${n1(R.h)} م — يمتلئ الخزان العلوي في ${n0(R.fillMin)} دقيقة.`; }
+      if (R.noLift) { k = 'bad'; m = t('المحرك يدور والماء لا يصعد: ضاغط المضخة أقل من الرفع.'); }
+      else if (R.air) { k = 'bad'; m = t('فقاعات هواء — ماسورة السحب لا تصل إلى سطح الماء.'); }
+      else if (R.leak) { k = 'bad'; m = t('تسرّب — ماسورة الدفع لا تصل إلى الخزان العلوي.'); }
+      else if (R.cavitation) { k = 'bad'; m = t('تكهف — صوت حصى داخل المضخة، NPSH المتاح أقل من المطلوب.'); }
+      else { k = 'ok'; m = t('يضخ {0} م³/س عند {1} م — يمتلئ الخزان العلوي في {2} دقيقة.', [n2(R.q), n1(R.h), n0(R.fillMin)]); }
     } else {
       const v = verdict(runChecks(R, s)); k = v.level;
-      m = v.bad ? `مشكلات حرجة: ${v.bad} — افتح المذكرة الحسابية لإصلاحها.` : v.warn ? `يعمل، مع ملاحظات: ${v.warn}.` : `التصميم سليم — ${n2(R.q)} م³/س عند ${n1(R.h)} م.`;
+      m = v.bad ? t('مشكلات حرجة: {0} — افتح المذكرة الحسابية لإصلاحها.', [v.bad]) : v.warn ? t('يعمل، مع ملاحظات: {0}.', [v.warn]) : t('التصميم سليم — {0} م³/س عند {1} م.', [n2(R.q), n1(R.h)]);
     }
   }
   lamp.className = 'lamp ' + k; msg.textContent = m;
 }
 function paintTitle(s) {
-  $('#tbProject').textContent = s.name || 'بدون اسم';
-  $('#tbBuilding').textContent = s.building ? `${BUILDINGS[s.building.type].name} · ${s.building.floors} أدوار` : '—';
+  $('#tbProject').textContent = s.name || t('بدون اسم');
+  $('#tbBuilding').textContent = s.building ? t('{0} · {1} أدوار', [BUILDINGS[s.building.type].name, s.building.floors]) : '—';
   $('#tbPump').textContent = s.pump ? byId(s.pump.id).model : '—';
   $('#tbDate').textContent = date(Date.now());
 }
@@ -119,37 +121,41 @@ scene.addEventListener('click', e => { const t = e.target.closest('[data-act]');
 scene.addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const t = e.target.closest('[data-act]'); if (!t) return; e.preventDefault(); const a = t.dataset.act; actions[a] ? actions[a]() : select(a); });
 
 // ── التشغيل ──
-let last = 0;
+// الماء يمتلئ في المواسير أولاً (PRIME_TOTAL)، ثم يرتفع العلوي وينخفض الأرضي بنفس الحجم
+let last = 0, startedAt = 0;
 function loop(ts) {
   const ui = getUI(); if (!ui.running) return;
   const dt = last ? (ts - last) / 1000 : 0; last = ts;
-  if (R && R.flows) {
-    const span = Math.min(24, Math.max(5, R.fillMin / 6));
-    ui.fill = Math.min(1, ui.fill + dt / span);
-    const w = document.getElementById('roofWater');
-    if (w) { const bottom = +w.getAttribute('y') + +w.getAttribute('height'), lv = 50 * ui.fill; w.setAttribute('y', bottom - lv); w.setAttribute('height', lv); }
-    if (ui.fill >= 1) { setUI({ running: false, fill: 1 }, 'fill'); toast('امتلأ الخزان العلوي — العوّامة فصلت المضخة.'); return; }
+  if (!ui.primed && performance.now() - startedAt >= (reduceMotion() ? 0 : PRIME_TOTAL * 1000)) ui.primed = true;
+  if (ui.primed && R && R.flows) {
+    const s = getState(), span = Math.min(24, Math.max(6, R.fillMin / 6));
+    const dFill = dt / span;
+    ui.fill = Math.min(1, ui.fill + dFill);
+    ui.ground = Math.max(0, ui.ground - dFill * s.roof.vol / s.ground.vol);
+    setLevels(scene, ui);
+    if (ui.fill >= 1) { setUI({ running: false, fill: 1 }, 'fill'); toast(t('امتلأ الخزان العلوي — العوّامة فصلت المضخة.')); return; }
+    if (ui.ground <= 0.03) { setUI({ running: false }, 'fill'); toast(t('الخزان الأرضي فارغ — حساس المستوى فصل المضخة لحمايتها.')); return; }
   }
   requestAnimationFrame(loop);
 }
 $('#run').addEventListener('click', () => {
   const ui = getUI();
-  if (!ui.running && ui.fill >= 0.98) ui.fill = 0.15;
+  if (!ui.running && (ui.fill >= 0.98 || ui.ground <= 0.05)) { ui.fill = 0.15; ui.ground = 1; }
   setUI({ running: !ui.running }, 'fill');
-  if (getUI().running) { last = 0; requestAnimationFrame(loop); }
+  if (getUI().running) { last = 0; startedAt = performance.now(); requestAnimationFrame(loop); }
 });
 if (reduceMotion()) document.documentElement.classList.add('reduce');
 
 // ── الأزرار العلوية ──
 $('#analyze').addEventListener('click', () => {
-  const open = () => openAnalysis(getState(), R, { canPrint: auth.name !== 'claude', onFix: f => { update(s => f.apply(s), 'structure'); closeDialog(); toast('طُبّق الإصلاح'); open(); } });
+  const open = () => openAnalysis(getState(), R, { canPrint: auth.name !== 'claude', onFix: f => { update(s => f.apply(s), 'structure'); closeDialog(); toast(t('طُبّق الإصلاح')); open(); } });
   if (R) open();
 });
 $('#envBtn').addEventListener('click', () => select('env'));
 $('#savedBtn').addEventListener('click', () => openSaved(getState, { currentId, onOpen: (d, id) => { currentId = id; replace(d); }, onSaved: id => { currentId = id; paintTitle(getState()); } }));
-confirmButton($('#newBtn'), 'تأكيد المسح؟', () => { currentId = null; replace(fresh()); });
+confirmButton($('#newBtn'), t('تأكيد المسح؟'), () => { currentId = null; replace(fresh()); });
 $('#projName').addEventListener('input', e => { update(s => { s.name = e.target.value.slice(0, 60); }, 'value'); });
-$('#outBtn').addEventListener('click', () => signOut('تم تسجيل الخروج.'));
+$('#outBtn').addEventListener('click', () => signOut(t('تم تسجيل الخروج.')));
 
 async function signOut(msg) {
   await auth.signOut();
@@ -157,20 +163,38 @@ async function signOut(msg) {
   else location.replace('index.html?m=' + encodeURIComponent(msg));
 }
 
+// ── اللغة: نحفظ التصميم مؤقتاً قبل إعادة التحميل ──
+const DRAFT = 'pz.draft';
+$('#langSlot').append(langButton(() => {
+  sessionStorage.setItem(DRAFT, JSON.stringify({ s: getState(), id: currentId, sel: getUI().selected }));
+  if (auth.name === 'claude') sessionStorage.setItem('pz.autologin', '1');
+}));
+function restoreDraft() {
+  let d = null; try { d = JSON.parse(sessionStorage.getItem(DRAFT) || 'null'); sessionStorage.removeItem(DRAFT); } catch {}
+  if (!d) return false;
+  currentId = typeof d.id === 'string' ? d.id : null;
+  replace(cleanDesign(d.s));
+  $('#projName').value = getState().name || '';
+  return true;
+}
+
 // ── الدخول ──
 async function start(user) {
   $('#uname').textContent = user.name;
   $('#gate')?.classList.add('hidden'); $('#app').classList.remove('hidden');
   const admin = await auth.isAdmin(); $('#adminLink')?.classList.toggle('hidden', !admin);
-  watchIdle(() => signOut('أُغلقت الجلسة تلقائياً بعد فترة دون نشاط.'));
-  replace(fresh());
+  watchIdle(() => signOut(t('أُغلقت الجلسة تلقائياً بعد فترة دون نشاط.')));
+  if (!restoreDraft()) replace(fresh());
 }
 if (auth.name === 'claude') {
   $('#gate').classList.remove('hidden');
-  $('#gateBtn').addEventListener('click', async () => {
-    const b = $('#gateBtn'); b.disabled = true; $('#gateMsg').textContent = 'جارٍ التحقق من هويتك…';
+  const go = async () => {
+    const b = $('#gateBtn'); b.disabled = true; $('#gateMsg').textContent = t('جارٍ التحقق من هويتك…');
     try { start(await auth.signIn()); } catch (e) { $('#gateMsg').textContent = e.message; } finally { b.disabled = false; }
-  });
+  };
+  $('#gateBtn').addEventListener('click', go);
+  let auto = false; try { auto = sessionStorage.getItem('pz.autologin') === '1'; sessionStorage.removeItem('pz.autologin'); } catch {}
+  if (auto) go();
 } else {
   requireUser().then(u => u && start(u));
 }

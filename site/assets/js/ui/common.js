@@ -1,5 +1,6 @@
 // نوافذ، تنبيهات، أيقونات، الشعار
 import { $, el } from '../core/dom.js';
+import { t } from '../i18n/index.js';
 
 let lastFocus = null;
 export function openDialog({ title, sub = '', body, wide = false, onClose }) {
@@ -7,7 +8,7 @@ export function openDialog({ title, sub = '', body, wide = false, onClose }) {
   lastFocus = document.activeElement;
   const head = el('div', { class: 'dialog-head' },
     el('div', {}, el('h2', { text: title }), sub ? el('p', { text: sub }) : null),
-    el('button', { class: 'x-btn', 'aria-label': 'إغلاق', onclick: closeDialog, text: '×' }));
+    el('button', { class: 'x-btn', 'aria-label': t('إغلاق'), onclick: closeDialog, text: '×' }));
   const box = el('div', { class: 'dialog', role: 'dialog', 'aria-modal': 'true', 'aria-label': title, style: wide ? 'width:min(1040px,100%)' : '' }, head, el('div', { class: 'dialog-body' }, body));
   const ov = el('div', { class: 'overlay', id: 'overlay', onclick: e => { if (e.target === ov) closeDialog(); } }, box);
   ov._onClose = onClose;

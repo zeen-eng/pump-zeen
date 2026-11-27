@@ -28,7 +28,8 @@ class FakeSupabase:
         if '/auth/v1/token' in url:
             if body.get('password') == 'wrong': return await ok({'error_code': 'invalid_credentials'}, 400)
             return await ok(self.tok())
-        if '/auth/v1/signup' in url: return await ok(self.tok())
+        if '/auth/v1/signup' in url: return await ok({'id': 'u-9', 'email': body.get('email')})   # تأكيد البريد مطلوب
+        if '/auth/v1/resend' in url: return await ok({})
         if '/auth/v1/logout' in url: return await route.fulfill(status=204, body='')
         if '/auth/v1/recover' in url: return await ok({})
         if '/rpc/is_admin' in url: return await ok(self.admin)
@@ -59,7 +60,8 @@ async def page_with(browser, vp, dark, fake):
     page.on('console', lambda m: m.type == 'error' and 'Failed to load resource' not in m.text and errs.append('console: ' + m.text))
     async def cfg(route):
         src = open(os.path.join(SITE, 'assets/js/config.js'), encoding='utf-8').read()
-        src = src.replace("supabaseUrl: ''", f"supabaseUrl: '{SUPA}'").replace("supabaseKey: ''", "supabaseKey: 'sb_publishable_test'")
+        src = re.sub(r"supabaseUrl: '[^']*'", f"supabaseUrl: '{SUPA}'", src)
+        src = re.sub(r"supabaseKey: '[^']*'", "supabaseKey: 'sb_publishable_test'", src)
         await route.fulfill(content_type='text/javascript', body=src)
     await page.route('**/assets/js/config.js', cfg)
     await page.route(SUPA + '/**', fake.handle)
@@ -71,6 +73,15 @@ async def run(browser, name, vp, dark):
     ctx, page, errs = await page_with(browser, vp, dark, fake)
     shot = lambda n: page.screenshot(path=os.path.join(SHOTS, f'{name}-{n}.png'))
     await page.goto(BASE + 'index.html'); await page.wait_for_timeout(300); await shot('01-login')
+    # التسجيل → شاشة «تحقق من بريدك»
+    await page.click('[data-tab=up]'); await shot('01b-signup')
+    await page.fill('#upName', 'زين'); await page.fill('#upEmail', 'new@gmail.com'); await page.fill('#upPass', 'abc12345678')
+    await page.click('#fUp [type=submit]'); await page.wait_for_timeout(1600)
+    assert await page.is_visible('#sent'), 'sent panel'
+    assert 'new@gmail.com' in await page.inner_text('#sentTo')
+    assert await page.is_visible('#openMail'), 'gmail shortcut'
+    await shot('01c-sent')
+    await page.click('#toSignIn')
     await page.fill('#inEmail', 'eng@example.com'); await page.fill('#inPass', 'wrong'); await page.click('#fIn [type=submit]')
     await page.wait_for_timeout(200); assert 'غير صحيحة' in await page.inner_text('#msg'), 'wrong-password message'
     await page.fill('#inPass', 'correct-pass-1'); await page.click('#fIn [type=submit]')
@@ -79,11 +90,23 @@ async def run(browser, name, vp, dark):
     await page.click('[data-act=addRoof]'); await page.click('[data-act=addGround]'); await shot('03-tanks')
     await page.click('[data-act=addPump]'); await page.wait_for_timeout(200); await shot('04-pumps')
     await page.click('.pump-table tr.rec'); await page.wait_for_timeout(100)
-    await page.click('#run'); await page.wait_for_timeout(1200); await shot('05-running')
+    await page.click('#run'); await page.wait_for_timeout(700); await shot('05a-priming')
+    await page.wait_for_timeout(2600); await shot('05-running')
+    lv = await page.evaluate("document.getElementById('roofWater').style.transform"); print(name, 'roof level transform:', lv)
     status = await page.inner_text('#statusMsg'); print(name, 'running:', status)
     await page.click('#run')
     await page.click('.hot[data-act=discharge]'); await page.fill('.inspector input[type=number] >> nth=0', '4'); await page.press('.inspector input[type=number] >> nth=0', 'Tab')
     await page.click('#run'); await page.wait_for_timeout(700); await shot('06-leak'); print(name, 'leak:', await page.inner_text('#statusMsg')); await page.click('#run')
+    # اللغة: التبديل إلى الإنجليزية يحفظ التصميم ويعيد التحميل
+    await page.click('.lang-btn'); await page.wait_for_load_state('load'); await page.wait_for_timeout(900)
+    print(name, 'EN status:', await page.inner_text('#statusMsg'), '| pump:', await page.inner_text('#tbPump'))
+    ar = await page.evaluate(r"document.body.innerText.split('\n').filter(l => /[\u0600-\u06FF]/.test(l))")
+    print(name, 'Arabic left in EN UI:', ar[:8])
+    await shot('06b-english')
+    await page.click('#analyze'); await page.wait_for_timeout(300); await shot('06c-english-memo')
+    ar2 = await page.evaluate(r"document.querySelector('.dialog').innerText.split('\n').filter(l => /[\u0600-\u06FF]/.test(l))"); print(name, 'Arabic left in EN memo:', ar2[:5])
+    await page.click('.x-btn')
+    await page.click('.lang-btn'); await page.wait_for_load_state('load'); await page.wait_for_timeout(900)
     await page.click('#analyze'); await page.wait_for_timeout(200); await shot('07-memo')
     await page.click('.checks .fixes .btn >> nth=0'); await page.wait_for_timeout(200)
     await page.click('.x-btn'); print(name, 'after fix:', await page.inner_text('#statusMsg'))

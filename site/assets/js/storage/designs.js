@@ -3,9 +3,10 @@
 // list() → [{id, name, updated}]   load(id) → object   save(name, data, id?) → id   remove(id)
 // ═══════════════════════════════════════════════════════════════
 import { auth } from '../auth/index.js';
+import { t } from '../i18n/index.js';
 
 const MAX = 60;
-const clip = s => String(s || '').replace(/[\u0000-\u001f<>]/g, '').trim().slice(0, MAX) || 'تصميم بدون اسم';
+const clip = s => String(s || '').replace(/[\u0000-\u001f<>]/g, '').trim().slice(0, MAX) || t('تصميم بدون اسم');
 
 const supa = {
   async list() {
@@ -28,7 +29,7 @@ const supa = {
 };
 
 const claude = {
-  coll() { const db = auth.db(), u = auth.user(); if (!db || !u) throw new Error('الحفظ غير متاح في هذا العرض.'); return db.collection('data/users/' + u.id); },
+  coll() { const db = auth.db(), u = auth.user(); if (!db || !u) throw new Error(t('الحفظ غير متاح في هذا العرض.')); return db.collection('data/users/' + u.id); },
   async list() {
     const q = await this.coll().orderBy('at', 'desc').limit(100).get();
     return q.docs.map(d => { const v = d.data() || {}; return { id: d.id, name: String(v.name || ''), updated: Number(v.at) || 0 }; });

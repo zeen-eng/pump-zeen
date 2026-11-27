@@ -31,3 +31,36 @@
   .auth-art { border-inline-end: 0; border-bottom: 1px solid var(--rule); }
   .facts { grid-template-columns: 1fr; }
 }
+
+/* شريط علوي في الواجهة: الشعار وزر اللغة */
+.art-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.lang-btn { font-weight: 600; min-height: 36px; border-color: var(--rule); }
+
+/* خطوات إنشاء الحساب: توضح من البداية أن رسالة تفعيل ستصل */
+.howto { list-style: none; counter-reset: h; padding: 0; margin: 0 0 18px; display: grid; gap: 0; border: 1px solid var(--rule); }
+.howto li { counter-increment: h; display: grid; grid-template-columns: 28px 1fr; gap: 0 10px; padding: 9px 12px; font-size: var(--fs-1); }
+.howto li + li { border-top: 1px solid var(--rule-soft); }
+.howto li::before { content: counter(h); grid-row: span 2; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 600; background: var(--sheet-2); border: 1px solid var(--rule); }
+.howto li:nth-child(2)::before { background: var(--water-bg); border-color: var(--water); color: var(--water); }
+.howto b { font-weight: 600; }
+.howto span { color: var(--ink-2); }
+
+/* شاشة «تحقق من بريدك» */
+.sent { text-align: center; }
+.sent h2 { font-size: var(--fs-4); margin: 6px 0 6px; }
+.sent > p { color: var(--ink-2); margin-bottom: 14px; }
+.sent > p b { color: var(--ink); font-weight: 600; overflow-wrap: anywhere; }
+.sent-steps { text-align: start; font-size: var(--fs-1); color: var(--ink-2); padding-inline-start: 20px; margin: 0 0 16px; display: grid; gap: 6px; }
+.sent .btn.wide { margin-top: 8px; }
+.sent-links { margin-top: 12px; font-size: var(--fs-1); color: var(--ink-3); }
+.envelope { width: 120px; height: 90px; display: block; margin: 0 auto; }
+.env-body { fill: var(--sheet-2); stroke: var(--ink); stroke-width: 1.5; }
+.env-letter rect { fill: var(--sheet); stroke: var(--ink-2); stroke-width: 1.2; }
+.env-letter path { stroke: var(--rule); stroke-width: 2; }
+.env-letter { animation: letter 1.2s cubic-bezier(.3, .8, .3, 1) .2s both; }
+@keyframes letter { from { transform: translateY(34px); } }
+.env-flap { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linejoin: round; }
+.env-dot { fill: var(--ok); animation: pop .4s cubic-bezier(.3, 1.6, .5, 1) 1.2s both; transform-box: fill-box; transform-origin: center; }
+.env-check { fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; animation: pop .4s 1.35s both; transform-box: fill-box; transform-origin: center; }
+@keyframes pop { from { transform: scale(0); } }
+@media (prefers-reduced-motion: reduce) { .env-letter, .env-dot, .env-check { animation: none; } }

@@ -1,4 +1,5 @@
 // مزوّد المعاينة داخل Claude: الهوية من حساب Claude، والحفظ في مساحة خاصة لكل مستخدم
+import { t } from '../i18n/index.js';
 let user = null, db = null;
 
 export const claudeAuth = {
@@ -8,11 +9,11 @@ export const claudeAuth = {
   user: () => user,
   async signIn() {
     const u = await window.claude.use('user');
-    if (!u) throw new Error('تعذّر التحقق من الهوية. افتح الصفحة من claude.ai وأنت مسجّل الدخول.');
+    if (!u) throw new Error(t('تعذّر التحقق من الهوية. افتح الصفحة من claude.ai وأنت مسجّل الدخول.'));
     const id = await u.id();
-    if (!id || typeof id !== 'string') throw new Error('تعذّر التحقق من الهوية.');
+    if (!id || typeof id !== 'string') throw new Error(t('تعذّر التحقق من الهوية.'));
     const me = await u.me();
-    user = { id, email: '', name: (me && me.name) || 'مهندس' };
+    user = { id, email: '', name: (me && me.name) || t('مهندس') };
     db = await window.claude.use('db');
     return user;
   },

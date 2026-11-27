@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<meta name="description" content="pump.zeen — صمّم شبكة ضخ المياه لمبناك واحسبها بمنحنيات مضخات حقيقية.">
-<title>pump.zeen — تصميم شبكات ضخ المياه</title>
+<meta name="description" content="pump.zeen — صمّم شبكة ضخ المياه لمبناك واحسبها بمنحنيات مضخات حقيقية." data-en="pump.zeen — design your building's water pumping system and check it against real pump curves.">
+<title data-en="pump.zeen — water pumping design">pump.zeen — تصميم شبكات ضخ المياه</title>
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,41 +18,72 @@
 <body>
 <main class="auth">
   <section class="auth-art">
-    <a class="brand" href="index.html" aria-label="pump.zeen"><span data-logo></span>pump.zeen</a>
-    <h1>صمّم شبكة الضخ لمبناك، واعرف قبل الشراء هل تعمل.</h1>
-    <p class="lead">ارسم الخزانين والمضخة والمواسير، ويحسب الموقع نقطة التشغيل والتكهف والطرق المائي من منحنيات مضخات حقيقية من كتالوج الشركة المصنّعة.</p>
-    <div class="facts">
-      <div><b>منحنيات حقيقية</b>Pedrollo CP · JSW · 4SR بتردد 60 Hz</div>
-      <div><b>مذكرة حسابية</b>Darcy–Weisbach، NPSH، جوكوفسكي</div>
-      <div><b>إصلاح بضغطة</b>لكل مشكلة اقتراح قابل للتطبيق</div>
+    <div class="art-top">
+      <a class="brand" href="index.html" aria-label="pump.zeen"><span data-logo></span>pump.zeen</a>
+      <span id="langSlot"></span>
     </div>
-    <div class="frame"><svg id="hero" viewBox="0 0 1000 560" role="img" aria-label="مثال: مقطع لشبكة ضخ لبيت من دورين"></svg></div>
-    <a class="small muted" href="catalog.html">تصفّح كتالوج المضخات ومصادره ←</a>
+    <h1 data-i18n>صمّم شبكة الضخ لمبناك، واعرف قبل الشراء هل تعمل.</h1>
+    <p class="lead" data-i18n>ارسم الخزانين والمضخة والمواسير، ويحسب الموقع نقطة التشغيل والتكهف والطرق المائي من منحنيات مضخات حقيقية من كتالوج الشركة المصنّعة.</p>
+    <div class="facts">
+      <div><b data-i18n>منحنيات حقيقية</b><span>Pedrollo CP · JSW · 4SR · 60 Hz</span></div>
+      <div><b data-i18n>مذكرة حسابية</b><span data-i18n>Darcy–Weisbach، NPSH، جوكوفسكي</span></div>
+      <div><b data-i18n>إصلاح بضغطة</b><span data-i18n>لكل مشكلة اقتراح قابل للتطبيق</span></div>
+    </div>
+    <div class="frame"><svg id="hero" viewBox="0 0 1000 560" direction="rtl" role="img" aria-label="مثال: مقطع لشبكة ضخ لبيت من دورين" data-i18n-aria></svg></div>
+    <a class="small muted" href="catalog.html" data-i18n>تصفّح كتالوج المضخات ومصادره ←</a>
   </section>
 
   <section class="auth-side">
     <div class="auth-card">
-      <div class="tabs" role="tablist">
-        <button role="tab" aria-selected="true" data-tab="in">تسجيل الدخول</button>
-        <button role="tab" aria-selected="false" data-tab="up">حساب جديد</button>
+      <div id="forms">
+        <div class="tabs" role="tablist">
+          <button role="tab" aria-selected="true" data-tab="in" data-i18n>تسجيل الدخول</button>
+          <button role="tab" aria-selected="false" data-tab="up" data-i18n>حساب جديد</button>
+        </div>
+
+        <form id="fIn" novalidate>
+          <div class="field"><label for="inEmail" data-i18n>البريد الإلكتروني</label><input class="input" id="inEmail" type="email" autocomplete="username" required dir="ltr"></div>
+          <div class="field"><label for="inPass" data-i18n>كلمة المرور</label><input class="input" id="inPass" type="password" autocomplete="current-password" required dir="ltr"></div>
+          <button class="btn primary wide" type="submit" data-i18n>دخول</button>
+          <p style="margin-top:12px"><button class="linklike" type="button" id="forgot" data-i18n>نسيت كلمة المرور؟</button></p>
+        </form>
+
+        <form id="fUp" class="hidden" novalidate>
+          <ol class="howto" aria-label="خطوات إنشاء الحساب" data-i18n-aria>
+            <li><b data-i18n>أنشئ الحساب</b><span data-i18n>الاسم والبريد وكلمة المرور</span></li>
+            <li><b data-i18n>افتح بريدك</b><span data-i18n>تصلك رسالة تفعيل خلال دقيقة</span></li>
+            <li><b data-i18n>اضغط رابط التفعيل</b><span data-i18n>وتدخل مباشرة إلى المصمم</span></li>
+          </ol>
+          <div class="field"><label for="upName" data-i18n>الاسم</label><input class="input" id="upName" maxlength="60" autocomplete="name" required></div>
+          <div class="field"><label for="upEmail" data-i18n>البريد الإلكتروني</label><input class="input" id="upEmail" type="email" autocomplete="email" required dir="ltr"><span class="small muted" data-i18n>اكتبه بدقة: إليه تُرسل رسالة التفعيل.</span></div>
+          <div class="field"><label for="upPass" data-i18n>كلمة المرور</label><input class="input" id="upPass" type="password" autocomplete="new-password" minlength="10" required dir="ltr"><div class="meter"><i id="meter"></i></div><span class="small muted" data-i18n>10 أحرف على الأقل، تشمل حروفاً وأرقاماً.</span></div>
+          <button class="btn primary wide" type="submit" data-i18n>إنشاء الحساب وإرسال رسالة التفعيل</button>
+        </form>
       </div>
 
-      <form id="fIn" novalidate>
-        <div class="field"><label for="inEmail">البريد الإلكتروني</label><input class="input" id="inEmail" type="email" autocomplete="username" required dir="ltr"></div>
-        <div class="field"><label for="inPass">كلمة المرور</label><input class="input" id="inPass" type="password" autocomplete="current-password" required dir="ltr"></div>
-        <button class="btn primary wide" type="submit">دخول</button>
-        <p style="margin-top:12px"><button class="linklike" type="button" id="forgot">نسيت كلمة المرور؟</button></p>
-      </form>
-
-      <form id="fUp" class="hidden" novalidate>
-        <div class="field"><label for="upName">الاسم</label><input class="input" id="upName" maxlength="60" autocomplete="name" required></div>
-        <div class="field"><label for="upEmail">البريد الإلكتروني</label><input class="input" id="upEmail" type="email" autocomplete="email" required dir="ltr"></div>
-        <div class="field"><label for="upPass">كلمة المرور</label><input class="input" id="upPass" type="password" autocomplete="new-password" minlength="10" required dir="ltr"><div class="meter"><i id="meter"></i></div><span class="small muted">10 أحرف على الأقل، تشمل حروفاً وأرقاماً.</span></div>
-        <button class="btn primary wide" type="submit">إنشاء الحساب</button>
-      </form>
+      <!-- يظهر بعد التسجيل: تعليمات واضحة لرسالة التفعيل -->
+      <section id="sent" class="sent hidden" aria-live="polite">
+        <svg class="envelope" viewBox="0 0 120 90" aria-hidden="true">
+          <rect x="10" y="22" width="100" height="62" rx="4" class="env-body"/>
+          <g class="env-letter"><rect x="22" y="8" width="76" height="52" rx="3"/><path d="M32 22h56M32 32h56M32 42h36"/></g>
+          <path d="M10 26l50 34 50-34" class="env-flap"/>
+          <circle cx="104" cy="22" r="11" class="env-dot"/><path d="M99 22l4 4 7-8" class="env-check"/>
+        </svg>
+        <h2 data-i18n>تحقق من بريدك</h2>
+        <p><span data-i18n>أرسلنا رابط التفعيل إلى</span> <b id="sentTo" dir="ltr"></b></p>
+        <ol class="sent-steps">
+          <li data-i18n>افتح الرسالة بعنوان «Confirm Your Signup» من Supabase Auth.</li>
+          <li data-i18n>اضغط رابط التفعيل، فتعود هنا وتدخل مباشرة.</li>
+          <li data-i18n>لم تصلك خلال دقيقتين؟ افحص مجلد الرسائل غير المرغوب (Spam).</li>
+        </ol>
+        <a class="btn wide hidden" id="openMail" target="_blank" rel="noopener noreferrer"></a>
+        <button class="btn primary wide" id="resend" type="button" data-i18n>إعادة إرسال الرسالة</button>
+        <p class="small muted" id="resendNote" role="status"></p>
+        <p class="sent-links"><button class="linklike" type="button" id="changeEmail" data-i18n>تغيير البريد</button> · <button class="linklike" type="button" id="toSignIn" data-i18n>حسابي مفعّل — تسجيل الدخول</button></p>
+      </section>
 
       <p class="msg" id="msg" role="status"></p>
-      <div class="secure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>اتصال مشفّر، وكل مستخدم لا يرى إلا تصاميمه. الجلسة تُغلق تلقائياً بعد عدم النشاط.</span></div>
+      <div class="secure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span data-i18n>اتصال مشفّر، وكل مستخدم لا يرى إلا تصاميمه. الجلسة تُغلق تلقائياً بعد عدم النشاط.</span></div>
     </div>
   </section>
 </main>

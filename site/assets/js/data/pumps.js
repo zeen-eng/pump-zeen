@@ -3,28 +3,29 @@
 // لإضافة مضخة: أضف عنصراً إلى PUMPS بنفس الشكل، واذكر مصدرها في SOURCES.
 // النقاط curve: [التدفق لتر/دقيقة, الضاغط متر] كما في جدول الكتالوج حرفياً.
 // ═══════════════════════════════════════════════════════════════
+import { t } from '../i18n/index.js';
 
 export const SOURCES = {
   cp60: {
     title: 'Pedrollo CP 0.25–2.2 kW — Datasheet 60 Hz',
     url: 'https://www.pedrollo.com/wp-content/uploads/schede-tecniche/EN/CP_EN-datasheet_60Hz.pdf',
-    publisher: 'Pedrollo S.p.A. — الموقع الرسمي',
+    publisher: t('Pedrollo S.p.A. — الموقع الرسمي'),
     hz: 60, rpm: 3450,
-    notes: 'الجدول عند HS = 0 م، وتفاوت المنحنيات حسب EN ISO 9906 Grade 3B. أقصى سحب مانومتري 7 م. ضغط الجسم 6 بار للموديلات 600–620 و10 بار للموديلات 650–670. حرارة السائل −10 إلى +90°م.',
+    notes: t('الجدول عند HS = 0 م، وتفاوت المنحنيات حسب EN ISO 9906 Grade 3B. أقصى سحب مانومتري 7 م. ضغط الجسم 6 بار للموديلات 600–620 و10 بار للموديلات 650–670. حرارة السائل −10 إلى +90°م.'),
   },
   jsw2_60: {
-    title: 'Pedrollo JSW2 — Catálogo general 60 Hz (ص 104–105)',
+    title: t('Pedrollo JSW2 — Catálogo general 60 Hz (ص 104–105)'),
     url: 'https://cdn.shopify.com/s/files/1/0604/8697/5686/files/JSW2-60Hz-ES.pdf',
-    publisher: 'صفحة من كتالوج Pedrollo العام 60 Hz منشورة لدى موزّع',
+    publisher: t('صفحة من كتالوج Pedrollo العام 60 Hz منشورة لدى موزّع'),
     hz: 60, rpm: 3450,
-    notes: 'مضخات JET ذاتية التحضين. أقصى سحب 9 م (HS). حرارة السائل حتى +40°م. أقصى ضغط في الجسم 6 بار.',
+    notes: t('مضخات JET ذاتية التحضين. أقصى سحب 9 م (HS). حرارة السائل حتى +40°م. أقصى ضغط في الجسم 6 بار.'),
   },
   sr4_60: {
     title: 'Pedrollo 4SR-S 4" submersible — Datasheet 60 Hz',
     url: 'https://www.pedrollo.com/wp-content/uploads/schede-tecniche/EN/4SR_EN-datasheet_60Hz.pdf',
-    publisher: 'Pedrollo S.p.A. — الموقع الرسمي',
+    publisher: t('Pedrollo S.p.A. — الموقع الرسمي'),
     hz: 60, rpm: 3450,
-    notes: 'مضخة آبار 4 بوصة. حرارة السائل حتى +40°م، رمل حتى 200 غ/م³. عند تركيبها في خزان (لا بئر) يلزم غلاف تبريد (flow sleeve) ليمر الماء على المحرك.',
+    notes: t('مضخة آبار 4 بوصة. حرارة السائل حتى +40°م، رمل حتى 200 غ/م³. عند تركيبها في خزان (لا بئر) يلزم غلاف تبريد (flow sleeve) ليمر الماء على المحرك.'),
   },
 };
 
@@ -70,9 +71,9 @@ export const PUMPS = [
 ];
 
 export const PUMP_TYPES = {
-  surface:   { name: 'سطحية',          note: 'طرد مركزي فوق الأرض. تحتاج صمام قدم يبقيها ممتلئة، وأقصى سحب في الكتالوج 7 م.' },
-  selfprime: { name: 'ذاتية التحضين',  note: 'نوع JET يطرد الهواء وحده، يسحب حتى 9 م. تدفق أقل من الطرد المركزي بنفس القدرة.' },
-  sub:       { name: 'غاطسة',          note: 'تُركَّب داخل الخزان فلا سحب ولا تكهف. في الخزان تحتاج غلاف تبريد للمحرك.' },
+  surface:   { name: t('سطحية'),          note: t('طرد مركزي فوق الأرض. تحتاج صمام قدم يبقيها ممتلئة، وأقصى سحب في الكتالوج 7 م.') },
+  selfprime: { name: t('ذاتية التحضين'),  note: t('نوع JET يطرد الهواء وحده، يسحب حتى 9 م. تدفق أقل من الطرد المركزي بنفس القدرة.') },
+  sub:       { name: t('غاطسة'),          note: t('تُركَّب داخل الخزان فلا سحب ولا تكهف. في الخزان تحتاج غلاف تبريد للمحرك.') },
 };
 
 export const byId = id => PUMPS.find(p => p.id === id);

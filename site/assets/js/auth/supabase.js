@@ -5,6 +5,7 @@
 // • كل صلاحية حقيقية تُفرض في قاعدة البيانات عبر RLS، لا في المتصفح
 // ═══════════════════════════════════════════════════════════════
 import { CONFIG } from '../config.js';
+import { t } from '../i18n/index.js';
 
 const RT_KEY = 'pz.rt';
 let session = null; // { access, exp, user }
@@ -24,13 +25,13 @@ const store = {
 // رسائل الأخطاء بالعربية دون كشف تفاصيل داخلية
 function friendly(status, body) {
   const m = String(body?.error_code || body?.msg || body?.message || body?.error_description || '').toLowerCase();
-  if (m.includes('invalid') && m.includes('credential') || m.includes('invalid_grant') || m.includes('invalid login')) return 'البريد أو كلمة المرور غير صحيحة.';
-  if (m.includes('email_not_confirmed') || m.includes('not confirmed')) return 'فعّل حسابك من الرابط المرسل إلى بريدك أولاً.';
-  if (m.includes('already') && m.includes('registered') || m.includes('user_already_exists')) return 'هذا البريد مسجّل مسبقاً.';
-  if (m.includes('weak') || m.includes('password should')) return 'كلمة المرور ضعيفة: 10 أحرف على الأقل وتشمل حروفاً وأرقاماً.';
-  if (status === 429 || m.includes('rate')) return 'محاولات كثيرة. انتظر قليلاً ثم أعد المحاولة.';
-  if (m.includes('database error saving new user') || m.includes('signups')) return 'التسجيل مغلق حالياً.';
-  return 'تعذّر إكمال الطلب. حاول مرة أخرى.';
+  if (m.includes('invalid') && m.includes('credential') || m.includes('invalid_grant') || m.includes('invalid login')) return t('البريد أو كلمة المرور غير صحيحة.');
+  if (m.includes('email_not_confirmed') || m.includes('not confirmed')) return t('فعّل حسابك من الرابط المرسل إلى بريدك أولاً.');
+  if (m.includes('already') && m.includes('registered') || m.includes('user_already_exists')) return t('هذا البريد مسجّل مسبقاً.');
+  if (m.includes('weak') || m.includes('password should')) return t('كلمة المرور ضعيفة: 10 أحرف على الأقل وتشمل حروفاً وأرقاماً.');
+  if (status === 429 || m.includes('rate')) return t('محاولات كثيرة. انتظر قليلاً ثم أعد المحاولة.');
+  if (m.includes('database error saving new user') || m.includes('signups')) return t('التسجيل مغلق حالياً.');
+  return t('تعذّر إكمال الطلب. حاول مرة أخرى.');
 }
 
 async function call(path, { method = 'GET', body, auth = true, prefer } = {}) {
@@ -39,12 +40,21 @@ async function call(path, { method = 'GET', body, auth = true, prefer } = {}) {
   let res;
   try {
     res = await fetch(base() + path, { method, headers: h, body: body ? JSON.stringify(body) : undefined, credentials: 'omit', cache: 'no-store' });
-  } catch { throw new Error('لا يوجد اتصال بالخادم.'); }
+  } catch { throw new Error(t('لا يوجد اتصال بالخادم.')); }
   const txt = await res.text();
   let data = null; try { data = txt ? JSON.parse(txt) : null; } catch {}
-  if (!res.ok) { const e = new Error(friendly(res.status, data)); e.status = res.status; throw e; }
+  if (!res.ok) {
+    const e = new Error(friendly(res.status, data)); e.status = res.status;
+    const code = String(data?.error_code || data?.msg || '').toLowerCase();
+    if (code.includes('not_confirmed') || code.includes('not confirmed')) e.code = 'unconfirmed';
+    if (status429(res.status, code)) e.code = 'rate';
+    throw e;
+  }
   return data;
 }
+
+const status429 = (st, code) => st === 429 || code.includes('rate');
+const home = () => location.origin + '/';
 
 function accept(tok) {
   if (!tok?.access_token) return null;
@@ -76,8 +86,26 @@ export const supabaseAuth = {
     return accept(await call('/auth/v1/token?grant_type=password', { method: 'POST', auth: false, body: { email, password } }));
   },
   async signUp(email, password, fullName) {
-    const r = await call('/auth/v1/signup', { method: 'POST', auth: false, body: { email, password, data: { full_name: fullName } } });
+    const r = await call('/auth/v1/signup?redirect_to=' + encodeURIComponent(home()), { method: 'POST', auth: false, body: { email, password, data: { full_name: fullName } } });
     return r?.access_token ? { user: accept(r), confirm: false } : { user: null, confirm: true };
+  },
+  // إعادة إرسال رسالة التفعيل
+  async resendSignup(email) {
+    await call('/auth/v1/resend?redirect_to=' + encodeURIComponent(home()), { method: 'POST', auth: false, body: { type: 'signup', email } });
+  },
+  // بعد الضغط على رابط التفعيل يعود المستخدم بالرموز في # — نُنشئ الجلسة منها ثم نمسحها من العنوان
+  async fromHash() {
+    const h = new URLSearchParams(location.hash.slice(1));
+    if (!h.has('access_token') && !h.has('error')) return null;
+    history.replaceState(null, '', location.pathname + location.search);
+    if (h.has('error')) return { error: h.get('error_code') || h.get('error') };
+    const type = h.get('type');
+    if (type === 'recovery') return null;
+    const access = h.get('access_token');
+    const r = await fetch(base() + '/auth/v1/user', { headers: { apikey: CONFIG.supabaseKey, Authorization: 'Bearer ' + access }, credentials: 'omit', cache: 'no-store' });
+    if (!r.ok) return { error: 'invalid' };
+    const user = await r.json();
+    return { type, user: accept({ access_token: access, refresh_token: h.get('refresh_token'), expires_in: Number(h.get('expires_in')) || 3600, user }) };
   },
   async resetPassword(email) {
     await call('/auth/v1/recover?redirect_to=' + encodeURIComponent(location.origin + '/reset.html'), { method: 'POST', auth: false, body: { email } });

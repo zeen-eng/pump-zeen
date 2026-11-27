@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow">
-<title>الإدارة — pump.zeen</title>
+<title data-en="Admin — pump.zeen">الإدارة — pump.zeen</title>
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,22 +18,23 @@
 <body>
 <header class="topbar">
   <a class="brand" href="app.html" aria-label="pump.zeen"><span data-logo></span>pump.zeen</a>
-  <span class="project">لوحة الإدارة</span>
-  <a class="btn quiet" href="app.html">المصمم</a>
-  <button class="btn quiet" id="outBtn">خروج</button>
+  <span class="project" data-i18n>لوحة الإدارة</span>
+  <span id="langSlot"></span>
+  <a class="btn quiet" href="app.html" data-i18n>المصمم</a>
+  <button class="btn quiet" id="outBtn" data-i18n>خروج</button>
 </header>
 <main class="page hidden" id="admin">
-  <h1>الإدارة</h1>
-  <p class="lead">المستخدمون والتصاميم وسجل الدخول. هذه البيانات لا تُرسل إلا لحساب دوره «مدير»، والتحقق يتم في قاعدة البيانات.</p>
+  <h1 data-i18n>الإدارة</h1>
+  <p class="lead" data-i18n>المستخدمون والتصاميم وسجل الدخول. هذه البيانات لا تُرسل إلا لحساب دوره «مدير»، والتحقق يتم في قاعدة البيانات.</p>
   <div class="stats" id="stats"></div>
 
-  <section class="panel"><h2>التسجيل <label class="check"><input type="checkbox" id="signups"> <span>السماح بحسابات جديدة</span></label></h2></section>
+  <section class="panel"><h2><span data-i18n>التسجيل</span> <label class="check"><input type="checkbox" id="signups"> <span data-i18n>السماح بحسابات جديدة</span></label></h2></section>
 
-  <section class="panel"><h2>المستخدمون</h2><div class="body scroll-x"><table class="table" id="users"></table></div></section>
-  <section class="panel"><h2>آخر عمليات الدخول</h2><div class="body scroll-x"><table class="table" id="log"></table></div></section>
-  <section class="panel"><h2>كل التصاميم</h2><div class="body scroll-x"><table class="table" id="designs"></table></div></section>
+  <section class="panel"><h2 data-i18n>المستخدمون</h2><div class="body scroll-x"><table class="table" id="users"></table></div></section>
+  <section class="panel"><h2 data-i18n>آخر عمليات الدخول</h2><div class="body scroll-x"><table class="table" id="log"></table></div></section>
+  <section class="panel"><h2 data-i18n>كل التصاميم</h2><div class="body scroll-x"><table class="table" id="designs"></table></div></section>
 </main>
-<p class="page muted" id="wait">جارٍ التحقق من الصلاحية…</p>
+<p class="page muted" id="wait" data-i18n>جارٍ التحقق من الصلاحية…</p>
 <script type="module" src="assets/js/pages/admin.js"></script>
 </body>
 </html>

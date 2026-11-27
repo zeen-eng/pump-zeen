@@ -30,6 +30,9 @@
 | أغيّر لوحة الإدارة | `site/admin.html` + `site/assets/js/pages/admin.js` |
 | أغيّر الجداول أو الصلاحيات في قاعدة البيانات | ملف جديد في `supabase/migrations/` (لا تعدّل `001_init.sql` بعد تشغيله) |
 | أغيّر ترويسات الأمان | `site/_headers` |
+| أعدّل ترجمة نص إنجليزي، أو أضيف نصاً جديداً | `site/assets/js/i18n/en.js` (المفتاح هو النص العربي حرفياً). ثم `node tests/i18n.mjs` يبيّن أي نص بلا ترجمة |
+| أغيّر الحركة (امتلاء المواسير، الأمواج، المقياس، الشلال) | `site/assets/js/ui/scene.js` + قسم الحركة في `site/assets/css/scene.css` |
+| أغيّر شاشة «تحقق من بريدك» بعد التسجيل | `site/index.html` (قسم `#sent`) + `site/assets/js/pages/login.js` |
 
 ## الهيكل
 
@@ -50,6 +53,7 @@ site/                     ← هذا ما يُرفع إلى الاستضافة
       ├─ core/            الحالة، التنسيق، التحقق من المدخلات
       ├─ auth/            Supabase أو حساب Claude (للمعاينة)
       ├─ storage/         حفظ التصاميم
+      ├─ i18n/            الترجمة: t() و en.js
       ├─ ui/              المشهد، المفتش، النوافذ، المنحنى
       └─ pages/           ملف لكل صفحة يربط الأجزاء
 supabase/migrations/      قاعدة البيانات والصلاحيات
@@ -71,4 +75,6 @@ cd site && python3 -m http.server 8000
 ```bash
 pip install playwright && python3 -m playwright install chromium
 python3 tests/smoke.py      # يحاكي Supabase، ويحفظ لقطات في tests/shots/
+node tests/engine.mjs       # المحرك الهندسي لكل المباني والمضخات
+node tests/i18n.mjs         # كل نص له ترجمة إنجليزية
 ```

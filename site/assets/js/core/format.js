@@ -6,4 +6,5 @@ export const n0 = v => safe(F0, v);
 export const n1 = v => safe(F1, v);
 export const n2 = v => safe(F2, v);
 export const pct = v => safe(F0, v * 100) + '%';
-export const date = t => new Date(t).toLocaleDateString('ar-SA-u-nu-latn', { year: 'numeric', month: 'short', day: 'numeric' });
+import { isEn } from '../i18n/index.js';
+export const date = t => new Date(t).toLocaleDateString(isEn ? 'en-GB' : 'ar-SA-u-nu-latn', { year: 'numeric', month: 'short', day: 'numeric' });

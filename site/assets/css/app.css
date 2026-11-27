@@ -59,6 +59,8 @@
 .sequence li.done { color: var(--ink-2); } .sequence li.done::before { content: "✓"; background: var(--ink); color: var(--sheet); border-color: var(--ink); }
 .sequence li.now { color: var(--ink); font-weight: 600; } .sequence li.now::before { border-color: var(--ink); border-width: 2px; }
 
+@media (max-width: 1320px) { .topbar .project > span, .user-chip > span { display: none; } }
+@media (max-width: 1180px) { .topbar .btn .lbl { display: none; } .topbar .btn { padding: 0 10px; } }
 @media (max-width: 980px) {
   .workspace { grid-template-columns: minmax(0, 1fr); }
   .inspector { position: static; max-height: none; }

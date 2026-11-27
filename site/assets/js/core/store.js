@@ -23,7 +23,7 @@ export const fresh = () => ({
 });
 
 let state = fresh();
-const ui = { selected: null, running: false, fill: 0.15 };
+const ui = { selected: null, running: false, primed: false, fill: 0.15, ground: 1 };
 const subs = new Set();
 
 export const getState = () => state;
@@ -33,5 +33,5 @@ const emit = why => subs.forEach(fn => fn(state, ui, why));
 
 export function update(mutator, why = 'state') { mutator(state); emit(why); }
 export function setUI(patch, why = 'ui') { Object.assign(ui, patch); emit(why); }
-export function replace(next, why = 'load') { state = next; ui.selected = null; ui.running = false; ui.fill = 0.15; emit(why); }
+export function replace(next, why = 'load') { state = next; Object.assign(ui, { selected: null, running: false, primed: false, fill: 0.15, ground: 1 }); emit(why); }
 export const isComplete = s => !!(s.building && s.roof && s.ground && s.pump && s.suction);
