@@ -3,7 +3,7 @@
 الكود في GitHub: `zeen-eng/pump-zeen`، والموقع يُنشر على Cloudflare Workers، والدخول والحفظ في Supabase.
 
 ```
-تعديل في site/  →  git push  →  Cloudflare يبني tools/build-worker.mjs وينشر تلقائياً  →  zeenpumps.com
+تعديل في site/  →  git push  →  بناء deploy/edge.js بالـ commit الجديد ورفعه إلى Worker «pump-zeen»  →  zeenpumps.com
 ```
 
 ---
